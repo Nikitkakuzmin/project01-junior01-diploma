@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq .net.nz/thymeleaf/layout"
+      layout:decorate="main_layout.html">
+<div layout:fragment="content">
+
+    <div sec:authorize="isAuthenticated()">
+        <div style="margin-top: 50px; ">
+            <div>
+                <form th:action="@{'/add-recipe'}" method="post">
+                    <div class="row">
+                        <div class="col-12">
+                            <label>Recipe name:</label>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <input type="text" name="name" class="form-control" required placeholder="Recipe name"
+                                   style="width: 1200px;">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <label>Description:</label>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <input type="text" name="description" class="form-control" required
+                                   placeholder="Description">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <label>Image:</label>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <input type="text" name="image" class="form-control" required placeholder="Image">
+                        </div>
+                    </div>
+                    <div class="row mt-2 ">
+                        <div class="col-12">
+                            <button class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq .net.nz/thymeleaf/layout" layout:decorate="main_layout.html">
+
+<div layout:fragment="content">
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="width: 50px;" scope="col">Id</th>
+            <th style="width: 200px;" scope="col">Name</th>
+            <th style="width: 200px;" scope="col">Email</th>
+            <th style="width: 70px;" scope="col">Role</th>
+            <th style="width: 70px;" scope="col">Powers</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <th th:text="${user.id}"></th>
+            <td th:text="${user.fullName}"></td>
+            <td th:text="${user.email}"></td>
+            <form th:action="@{'/unassign-role'}" method="post" class="d-inline">
+
+                                <input type="hidden" name="user_id" th:value="${user.id}">
+
+                                <input type="hidden" name="role_id" th:value="${role.id}">
+
+                <td th:each="role : ${user.roles}">
+                    <button class="badge me-2 border-0 text-bg-primary"><span
+                            th:text="${role.permission}"></span><strong></strong></button>
+                </td>
+            </form>
+            <th>
+                <button type="button" class="btn btn-link fw-bold text-decoration-none btn-sm table-dark"
+                        data-bs-toggle="modal" data-bs-target="#addPower">
+                    + Add Power
+                </button>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+    <div class="modal fade" id="addPower" data-bs-backdrop="static"
+         data-bs-keyboard="false"
+         tabindex="-1"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <form th:action="@{'/assign-role'}" method="post">
+                <!--
+                <input type="hidden" name="user_id" th:value="${user.id}">
+                -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">ADD Power</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <label> Choose role:</label>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <select class="form-select" name="role_id">
+                                    <option th:each="role : ${roles}"
+                                            th:value="${role.id}"
+                                            th:text="${role.permission}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success">ADD</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+</html>

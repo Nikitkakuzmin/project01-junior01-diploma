@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq .net.nz/thymeleaf/layout"
+      layout:decorate="main_layout.html">
+<div layout:fragment="content">
+    <div style="margin-top: 50px; ">
+        <div>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if = "${param.error!=null}">
+                Incorrect email or password
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+            </div>
+            <form th:action="@{'/auth'}" method="post">
+                <div class="row">
+                    <div class="col-12">
+                        <label>Email:</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <input type="email" name="user_email" class="form-control" required placeholder="Email"
+                        style="width: 1200px;">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <label>Password:</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <input type="password" name="user_password" class="form-control" required placeholder="Password">
+                    </div>
+                </div>
+                <div class="row mt-2 ">
+                    <div class="col-12">
+                        <button class="btn btn-success">Sign in</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+</html>

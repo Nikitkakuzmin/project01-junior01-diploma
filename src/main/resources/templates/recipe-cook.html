@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq .net.nz/thymeleaf/layout"
+      layout:decorate="main_layout.html">
+<div>
+    <div layout:fragment="content">
+
+
+        <div sec:authorize="isAuthenticated()">
+
+            <div style="display: flex; margin-top: 30px;margin-left: 50px;
+                width: 1200px; height: 700px;">
+
+                <div>
+                    <div style="margin-left: 10px; margin-top: 10px; width: 400px; height: 400px;">
+                        <img th:text="${recipe.image}">
+                    </div>
+                    <div style="margin-left: 10px; margin-top: 10px;
+                        background-color: #354352; width: 400px; height: 250px;display: flex;">
+                        <div th:each="ingredient : ${recipe.ingredients}">
+                            <button class="badge me-2 border-0 text-bg-primary"
+                                    th:text="${ingredient.name}"></button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div style="margin-left: 10px;">
+                    <div style="  margin-top: 10px;
+                         width: 700px;height: 100px;" th:text="${recipe.name}">
+                    </div>
+                    <div style="  margin-top: 10px;
+                         width: 700px;height: 500px;" th:text="${recipe.description}">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

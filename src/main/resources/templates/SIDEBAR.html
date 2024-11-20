@@ -1,0 +1,25 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq .net.nz/thymeleaf/layout">
+<div class="list-group" style="width: 300px; margin-top: 50px;">
+    <a href="#" class="list-group-item list-group-item-action" sec:authorize="isAnonymous()">Instagram</a>
+    <a href="#" class="list-group-item list-group-item-action" sec:authorize="isAnonymous()">Youtube</a>
+    <a href="#" class="list-group-item list-group-item-action" sec:authorize="isAnonymous()">VKontakte</a>
+    <a href="#" class="list-group-item list-group-item-action" sec:authorize="isAnonymous()">Telegram</a>
+
+
+    <a th:href="@{'/profile'}" class="list-group-item list-group-item-action"
+       sec:authorize="isAuthenticated()">Profile</a>
+    <a th:href="@{'/admin'}" class="list-group-item list-group-item-action"
+       sec:authorize="hasAnyRole('ROLE_ADMIN')">ADMINISTRATION</a>
+    <a th:href="@{'/moder'}" class="list-group-item list-group-item-action"
+       sec:authorize="hasAnyRole('ROLE_MODER')">MODERATION</a>
+    <a th:href="@{'/repassword'}" class="list-group-item list-group-item-action"
+       sec:authorize="isAuthenticated()">Settings</a>
+    <a th:href="@{'/add-recipe'}" class="list-group-item list-group-item-action"
+       sec:authorize="isAuthenticated()">ADD RECIPE</a>
+
+</div>
+
+</html>

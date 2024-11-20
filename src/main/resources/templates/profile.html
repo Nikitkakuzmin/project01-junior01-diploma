@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq .net.nz/thymeleaf/layout"
+      layout:decorate="main_layout.html">
+<div layout:fragment="content">
+    <div class="row mt-4">
+        <div class="col-3 mx-auto">
+            <div class="card">
+                <form th:action="@{'/upload-ava'}" method="post" enctype="multipart/form-data">
+                    <img th:src="@{'/view-ava/' + ${#authentication.principal.ava}}" class="card-img-top">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <input class="form-control" type="file" name="ava">
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button class="btn btn-success">Upload PNG</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+

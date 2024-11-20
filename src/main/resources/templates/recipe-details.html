@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq .net.nz/thymeleaf/layout"
+      layout:decorate="main_layout.html">
+<div layout:fragment="content">
+    <div sec:authorize="isAuthenticated()">
+        <div style="display: flex; margin-top: 30px;margin-left: 50px; background-color: #abbac7;
+                width: 1130px; height: 700px;">
+            <div>
+                <div style="margin-left: 10px; margin-top: 10px; width: 400px; height: 480px;">
+                    <form th:action="@{'/upload-image'}" method="post" enctype="multipart/form-data">
+                        <img th:src="@{'/view-image/' + ${recipe.image}}" class="card-img-top">
+                        <input class="form-control"  type="file" name="image">
+                        <button class="btn btn-success">Upload PNG</button>
+                    </form>
+                </div>
+                <div style="margin-left: 10px; margin-top: 10px; width: 400px; height: 265px;">
+                    <form th:action="@{'/unassign-ingredient'}" method="post"
+                          th:each="ingredient : ${recipe.ingredients}"
+                          class="d-inline">
+                        <input type="hidden" name="recipe_id" th:value="${recipe.id}">
+                        <input type="hidden" name="ingredient_id" th:value="${ingredient.id}">
+                        <button class="badge me-2 border-0 text-bg-primary"><span
+                                th:text="${ingredient.name}"></span><strong></strong></button>
+                    </form>
+                    <button type="button" class="btn btn-link fw-bold text-decoration-none btn-sm table-dark"
+                            data-bs-toggle="modal" data-bs-target="#addIngredient">
+                        + Add Ingredient
+                    </button>
+                    <div class="modal fade" id="addIngredient" data-bs-backdrop="static"
+                         data-bs-keyboard="false"
+                         tabindex="-1"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form th:action="@{'/assign-ingredient'}" method="post">
+                                <input type="hidden" name="recipe_id" th:value="${recipe.id}">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">ADD Ingredient</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Закрыть"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label> Choose ingredient:</label>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-12">
+                                                <select class="form-select" name="ingredient_id">
+                                                    <option th:each="ingredient : ${ingredients}"
+                                                            th:value="${ingredient.id}"
+                                                            th:text="${ingredient.name}">
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-success">ADD</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-left: 10px;">
+                <div style="  margin-top: 10px;
+                         width: 700px;height: 100px;" th:text="${recipe.name}">
+
+                </div>
+                <div style="  margin-top: 10px;
+                         width: 700px;height: 565px;" th:text="${recipe.description}">
+
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12" style="margin-left: 60px;">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                        data-bs-target="#saveRecipeModal">
+                    Save
+                </button>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                        data-bs-target="#updateRecipeModal">
+                    Update
+                </button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#deleteRecipeModal">
+                    Delete
+                </button>
+            </div>
+        </div>
+        <div class="modal fade" id="updateRecipeModal" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form th:action="@{'/update-recipe'}" method="post">
+                        <input type="hidden" th:value="${recipe.id}" name="id">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel3">Update</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Закрыть"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    NAME:
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <input type="text" name="name" class="form-control" th:value="${recipe.name}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    Description:
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <input type="text" name="description" class="form-control"
+                                           th:value="${recipe.description}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    Image:
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <input type="text" name="image" class="form-control" th:value="${recipe.image}">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger">Yes</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deleteRecipeModal" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form th:action="@{'/delete-recipe'}" method="post">
+                        <input type="hidden" th:value="${recipe.id}" name="id">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel1">Confirm delete</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Закрыть"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure?
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger">Yes</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="saveRecipeModal" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form th:action="@{'/save-ingredient'}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel2">Confirm save</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Закрыть"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure?
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-success">Yes</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
